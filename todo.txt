@@ -1,0 +1,2 @@
+send hilda chat history
+keep chat history across sessions like a pen pal
