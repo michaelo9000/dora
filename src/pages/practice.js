@@ -19,25 +19,15 @@ function Practice(props) {
 
   function getWords(){
     var nouns = knownWords.filter(i => i.type*1 === WordTypes.Noun);
-    if (!nouns.length){
-      props.reportError("Add a noun");
+    var verbs = knownWords.filter(i => i.type*1 === WordTypes.Verb);
+    var adjectives = knownWords.filter(i => i.type*1 === WordTypes.Adjective);
+    if (!nouns.length || !verbs.length || !adjectives.length){
+      props.reportError("Add a noun, a verb and an adjective and then refresh");
       setHasEnoughWords(false);
       return;
     }
     var noun = nouns[Math.floor(Math.random() * nouns.length)];
-    var verbs = knownWords.filter(i => i.type*1 === WordTypes.Verb);
-    if (!verbs.length){
-      props.reportError("Add a verb");
-      setHasEnoughWords(false);
-      return;
-    }
     var verb = verbs[Math.floor(Math.random() * verbs.length)];
-    var adjectives = knownWords.filter(i => i.type*1 === WordTypes.Adjective);
-    if (!adjectives.length){
-      props.reportError("Add an adjective");
-      setHasEnoughWords(false);
-      return;
-    }
     var adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
     setCurrentWords([noun, verb, adjective]);
   }
