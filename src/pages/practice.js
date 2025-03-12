@@ -7,8 +7,6 @@ import { db, WordTypes } from "../infra/data";
 
 function Practice(props) {
   const [history, setHistory] = useState([]);
-  const [transcript, setTranscript] = useState();
-  const [itemComplete, setItemComplete] = useState();
   const [currentWords, setCurrentWords] = useState([]);
   const knownWords = useLiveQuery(() => db.words.toArray());
 
@@ -18,7 +16,6 @@ function Practice(props) {
     getWords();
 
   function getWords(){
-    setItemComplete(false);
     var nouns = knownWords.filter(i => i.type*1 === WordTypes.Noun);
     var noun = nouns[Math.floor(Math.random() * nouns.length)];
     var verbs = knownWords.filter(i => i.type*1 === WordTypes.Verb);
@@ -29,15 +26,12 @@ function Practice(props) {
   }
 
   async function processSpeechInput(transcript, isFinal) {
-    setTranscript(transcript);
     if (!transcript){
       props.reportError('You didn`t say anything pendejo');
       return;
     }
 
     if (isFinal){
-      setItemComplete(true);
-
       let translatedEnglish = await translate.spanishToEnglish(transcript);
       let doubleTranslatedSpanish = await translate.englishToSpanish(translatedEnglish);
 

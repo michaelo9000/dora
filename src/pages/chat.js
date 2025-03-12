@@ -33,15 +33,15 @@ function Chat(props) {
 
   async function toGpt(message) {
     return "sorry! hilda is away at the moment. (the openAI key needs updating)";
-    const contextAndMessage =
-      "reply as in a conversation with a friend. " + message;
-    const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: contextAndMessage }],
-      temperature: 0,
-      max_tokens: 250,
-    });
-    return response.choices[0].message.content;
+    // const contextAndMessage =
+    //   "reply as in a conversation with a friend. " + message;
+    // const response = await openai.chat.completions.create({
+    //   model: "gpt-3.5-turbo",
+    //   messages: [{ role: "user", content: contextAndMessage }],
+    //   temperature: 0,
+    //   max_tokens: 250,
+    // });
+    // return response.choices[0].message.content;
   }
 
   async function deliverResponse(newResponse) {
