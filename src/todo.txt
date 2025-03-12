@@ -1,0 +1,5 @@
+- autocomplete for words
+- weight more common words to appear more often
+- check that each prompted word has been utilised
+- prompt a certain tense to be used
+- publish!

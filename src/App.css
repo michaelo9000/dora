@@ -1,11 +1,88 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
+  position: relative;
+  max-height:100%;
+  height:600px;
+  width:400px;
+  max-width: 100%;
+  margin: auto;
+  padding:0 20px;
+  border: 1px dashed black;
+}
+
+.error-banner {
+  background-color: salmon;
+  color:white;
+}
+
+.content-row {
+  width:400px;
+  max-width: 100%;
+  padding:5px 0;
+  margin:auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.content-row.around {
+  justify-content: space-around;
+}
+
+.header {
+  height:40px;
+}
+
+p {
+  margin:0;
+  padding:0;
+}
+
+input, select, button {
+  height:30px;
+  margin:0;
+  border: 3px solid black;
+}
+
+input {
+  padding: 0 5px;
+}
+
+:root {
+  --word-width: 150px;
+  --type-width: 100px;
+  --button-width: 100px;
+}
+
+input, .word-list-word {
+  width:var(--word-width);
+}
+
+select, .word-list-type {
+  width: var(--type-width);
+}
+
+button {
+  width: var(--button-width);
+}
+
+.pointer, button, .nav-item {
+  cursor: pointer;
+  min-width:30px;
+  min-height:30px;
 }
 
 .mic {
-  width: 200px;
-  height: 200px;
-  margin: 20px auto;
+  position: absolute;
+  /* 20px above the nav bar */
+  bottom: 100px;
+  right:20px;
+  width: 150px;
+  height: 150px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 80% 80%;
@@ -13,10 +90,87 @@
   border: 5px solid black;
 }
 .mic.on {
-  background-image: url("./mic-on.svg");
-  background-color: red;
+  background-image: url("./img/mic-active.svg");
+  background-color: rgb(195, 33, 33);
 }
 .mic.off {
-  background-image: url("./mic-off.svg");
+  background-image: url("./img/mic.svg");
   background-color: white;
+}
+
+.nav {
+  width:100%;
+  max-width: 400px;
+  height:80px;
+  display: flex;
+  justify-content: space-around;
+  margin:auto;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 200px);
+}
+.nav-item {
+  height:100%;
+  width:80px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 80% 80%;
+}
+.nav-item.active {
+  background-color: rgb(32, 182, 132);
+}
+.nav-item.word-list {
+  background-image: url("./img/book.svg");
+}
+.nav-item.word-list.active {
+  background-image: url("./img/book-active.svg");
+}
+.nav-item.practice {
+  background-image: url("./img/mic.svg");
+}
+.nav-item.practice.active {
+  background-image: url("./img/mic-active.svg");
+}
+.nav-item.chat {
+  background-image: url("./img/chat.svg");
+}
+.nav-item.chat.active {
+  background-image: url("./img/chat-active.svg");
+}
+
+.practice-body {
+  /* Very terrible responsive design */
+  height: calc(100% - 300px);
+  overflow: auto;
+  border:1px dashed black;
+}
+
+.word-prompt {
+  border: 3px solid black;
+  padding:0px 5px 2px 5px;
+}
+.speech-result {
+  width:400px;
+  max-width: 100%;
+  margin:auto;
+  margin-top: 10px;
+  text-align: left;
+  position: relative;
+}
+.speech-result .heading {
+  width:100px;
+  padding:0px 5px 2px 5px;
+  border: 1px solid black;
+  border-bottom: none;
+}
+.speech-result .body {
+  padding:0px 5px 2px 5px;
+  border: 1px solid black;
+}
+.translations-toggle {
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+  text-align: right;
+  margin-top:10px;
 }
