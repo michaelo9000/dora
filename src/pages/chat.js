@@ -9,10 +9,10 @@ import { SpeechInput } from "../infra/speechInput";
 
 function Chat(props) {
   const [history, setHistory] = useState([]);
-  const [transcript, setTranscript] = useState();
+  // const [transcript, setTranscript] = useState();
 
   async function processSpeechInput(transcript) {
-    setTranscript(transcript);
+    // setTranscript(transcript);
     
     let newItem = { sender: "You", message: transcript };
     setHistory((h) => [...h, newItem]);
