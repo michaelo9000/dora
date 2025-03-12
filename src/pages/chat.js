@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { openai } from "../infra/openai";
+// import { openai } from "../infra/openai";
 import { translateLayer as translate } from "../infra/translate";
 import { normalise } from "../infra/stringFunctions";
 import { tts } from '../infra/tts';
