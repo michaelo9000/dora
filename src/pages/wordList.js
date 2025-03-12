@@ -27,7 +27,7 @@ export default function WordList(props){
     if (!props.isActive) 
         return <></>
 
-    return <div>
+    return <div className="word-list-body">
         <form className="content-row" onSubmit={(e) => submitWord(e)}>
             <input value={input || ''} onChange={e => setInput(e.target.value)} placeholder="New word"/>
             <select onChange={(e) => setType(e.target.value)} defaultValue={initialSelectedType}>

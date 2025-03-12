@@ -54,7 +54,7 @@ function Chat(props) {
     return <></>
 
   return (
-    <div>
+    <div className="chat-body">
       <div>
         {history.map((i, idx) => (
           <p key={idx}>
@@ -62,8 +62,7 @@ function Chat(props) {
           </p>
         ))}
       </div>
-      <hr />
-      <i>{transcript || "Say hi!"}</i>
+      {!history.length && <i>{"Say hi!"}</i>}
       <SpeechInput callback={processSpeechInput}/>
     </div>
   );

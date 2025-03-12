@@ -1,5 +1,12 @@
-- autocomplete for words
+definite
+- record word uses and promote underused words
 - weight more common words to appear more often
-- check that each prompted word has been utilised
+- bring back live updating transcripts
+- auto-hide history items older than the last
+
+probably
 - prompt a certain tense to be used
-- publish!
+
+nicety
+- check that each prompted word has been utilised
+- autocomplete for words

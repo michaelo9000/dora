@@ -19,6 +19,7 @@ export function SpeechInput(props){
     function onPress() {
         if (listening) {
             SpeechRecognition.stopListening();
+            // TODO this assumes the transcription is final, when in fact it's just when the mic was turned off.
             props.callback(transcript, true);
         } 
         else {
