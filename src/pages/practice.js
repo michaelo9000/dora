@@ -7,20 +7,37 @@ import { db, WordTypes } from "../infra/data";
 
 function Practice(props) {
   const [history, setHistory] = useState([]);
+  // optimistically true until proven false.
+  const [hasEnoughWords, setHasEnoughWords] = useState(true);
   const [currentWords, setCurrentWords] = useState([]);
   const knownWords = useLiveQuery(() => db.words.toArray());
 
   // Get some words on initial load. After this they'll be retrieved by pressing the button.
   // TODO change to initiate with the button too.
-  if (!currentWords.length && knownWords && knownWords.length)
+  if (!currentWords.length && knownWords && knownWords.length && hasEnoughWords)
     getWords();
 
   function getWords(){
     var nouns = knownWords.filter(i => i.type*1 === WordTypes.Noun);
+    if (!nouns.length){
+      props.reportError("Add a noun");
+      setHasEnoughWords(false);
+      return;
+    }
     var noun = nouns[Math.floor(Math.random() * nouns.length)];
     var verbs = knownWords.filter(i => i.type*1 === WordTypes.Verb);
+    if (!verbs.length){
+      props.reportError("Add a verb");
+      setHasEnoughWords(false);
+      return;
+    }
     var verb = verbs[Math.floor(Math.random() * verbs.length)];
     var adjectives = knownWords.filter(i => i.type*1 === WordTypes.Adjective);
+    if (!adjectives.length){
+      props.reportError("Add an adjective");
+      setHasEnoughWords(false);
+      return;
+    }
     var adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
     setCurrentWords([noun, verb, adjective]);
   }
