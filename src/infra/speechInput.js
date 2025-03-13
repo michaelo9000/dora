@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 //https://www.npmjs.com/package/react-speech-recognition
 import SpeechRecognition, {

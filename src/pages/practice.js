@@ -35,7 +35,7 @@ function Practice(props) {
     setCurrentWords([noun, verb, adjective]);
   }
 
-  const receiveTranscriptUpdate = useCallback((transcript) => setTranscript(transcript));
+  const receiveTranscriptUpdate = useCallback((transcript) => setTranscript(transcript), []);
 
   async function processSpeechInput(transcript) {
     if (!transcript){
