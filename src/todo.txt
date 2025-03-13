@@ -1,8 +1,9 @@
 definite
+- retry prompts
 - record word uses and promote underused words
 - weight more common words to appear more often
-- bring back live updating transcripts
 - auto-hide history items older than the last
+- rules page
 
 probably
 - prompt a certain tense to be used

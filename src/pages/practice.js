@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 
 import { translateLayer as translate } from "../infra/translate";
@@ -6,6 +6,7 @@ import { SpeechInput } from "../infra/speechInput";
 import { db, WordTypes } from "../infra/data";
 
 function Practice(props) {
+  const [transcript, setTranscript] = useState();
   const [history, setHistory] = useState([]);
   // optimistically true until proven false.
   const [hasEnoughWords, setHasEnoughWords] = useState();
@@ -34,25 +35,32 @@ function Practice(props) {
     setCurrentWords([noun, verb, adjective]);
   }
 
-  async function processSpeechInput(transcript, isFinal) {
+  const receiveTranscriptUpdate = useCallback((transcript) => setTranscript(transcript));
+
+  async function processSpeechInput(transcript) {
     if (!transcript){
       props.reportError('You didn`t say anything pendejo');
       return;
     }
 
-    if (isFinal){
-      let translatedEnglish = await translate.spanishToEnglish(transcript);
-      let doubleTranslatedSpanish = await translate.englishToSpanish(translatedEnglish);
+    let translatedEnglish = await translate.spanishToEnglish(transcript);
+    let doubleTranslatedSpanish = await translate.englishToSpanish(translatedEnglish);
 
-      let newItem = { 
-        words: currentWords, 
-        yourSentence: transcript, 
-        inEnglish: translatedEnglish, 
-        inSpanish: doubleTranslatedSpanish 
-      };
-      setHistory((h) => [newItem, ...h]);
-      getWords();
-    }
+    let newItem = { 
+      words: currentWords, 
+      yourSentence: transcript, 
+      inEnglish: translatedEnglish, 
+      inSpanish: doubleTranslatedSpanish 
+    };
+    setHistory((h) => [newItem, ...h]);
+    getWords();
+  }
+
+  function retryHistoryItem(item, index){
+    setCurrentWords(item.words);
+    let newHistory = history;
+    newHistory.splice(index, 1);
+    setHistory(newHistory);
   }
 
   if (!props.isActive) 
@@ -65,12 +73,12 @@ function Practice(props) {
       <div className="content-row around">
         {currentWords.map((i, idx) => <p key={idx} className="word-prompt">{i.value}</p>)}
       </div>
-      <i>Tap the microphone and speak at a conversational pace. Wait a second before turning the mic off.</i>
+      <i>{transcript || 'Speaking at a conversational pace works best!'}</i>
       {history.map((i, idx) => 
-        <HistoryItem key={idx} idx={idx} i={i}/>
+        <HistoryItem key={idx} idx={idx} i={i} retry={retryHistoryItem}/>
       )}
     </div>
-    <SpeechInput callback={processSpeechInput}/>
+    <SpeechInput onTranscriptFinal={processSpeechInput} onTranscriptUpdate={receiveTranscriptUpdate}/>
     </>
   );
 }
@@ -87,11 +95,14 @@ function HistoryItem(props){
       {i.words.map((i, idx) => <i key={idx} className="word-prompt">{i.value}</i>)}
     </div>
     <div className="speech-result">
-      <div className="heading">You said</div>
+      <div className="content-row p-0">
+        <div className="heading">You said</div>
+        <div className="text-clickable" onClick={() => props.retry(i, props.idx)}>Remove and Retry</div>
+      </div>
       <p className="body">{i.yourSentence}</p>
     </div>
     {collapsed ? 
-      <div className="translations-toggle" onClick={() => setCollapsed(false)}>Show Translations</div>
+      <div className="text-clickable mt-10" onClick={() => setCollapsed(false)}>Show Translations</div>
       :
       <>
       <div className="speech-result">
@@ -102,7 +113,7 @@ function HistoryItem(props){
         <div className="heading">In Spanish</div>
         <p className="body">{i.inSpanish}</p>
       </div>
-      <div className="translations-toggle" onClick={() => setCollapsed(true)}>Hide Translations</div>
+      <div className="text-clickable mt-10" onClick={() => setCollapsed(true)}>Hide Translations</div>
       </>
     }
   </div>
