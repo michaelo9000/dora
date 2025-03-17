@@ -14,8 +14,6 @@ function Practice(props) {
 
   const knownWords = useLiveQuery(() => db.words.toArray());
 
-  console.log(knownWords);
-
   // Get the initial words. Following this they'll be refreshed after each sentence spoken.
   if (!currentWords.length && knownWords && knownWords.length)
     getWords();
@@ -31,8 +29,6 @@ function Practice(props) {
 
     setHasEnoughWords(true);
     setCurrentWords([noun, verb, adjective]);
-
-    console.log(knownWords);
   }
 
   function getWord(type){
