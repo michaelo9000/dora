@@ -120,6 +120,10 @@ button {
   width: var(--button-width);
 }
 
+.word-list-uses {
+  background-color: var(--nav-color);
+}
+
 .pointer, button, .nav-item {
   cursor: pointer;
   min-width:30px;

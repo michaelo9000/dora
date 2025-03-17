@@ -16,7 +16,7 @@ export default function WordList(props){
             return;
         }
         // TODO check if word exists
-        db.words.add({value: input, type: selectedType});
+        db.words.add({value: input, type: selectedType, uses: 0});
     }
 
     function deleteWord(e, id){
@@ -41,7 +41,7 @@ export default function WordList(props){
         </form>
         {knownWords.map((i, idx) => 
             <form key={idx} className="content-row" onSubmit={(e) => deleteWord(e, i.id)}>
-                <p className="word-list-word">{i.value}</p>
+                <p className="word-list-word"><span className="word-list-uses">[{i.uses}]</span> {i.value}</p>
                 <p className="word-list-type">{getWordTypeName(i.type)}</p>
                 <button>REMOVE</button>
             </form>

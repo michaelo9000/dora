@@ -14,25 +14,37 @@ function Practice(props) {
 
   const knownWords = useLiveQuery(() => db.words.toArray());
 
+  console.log(knownWords);
+
   // Get the initial words. Following this they'll be refreshed after each sentence spoken.
   if (!currentWords.length && knownWords && knownWords.length)
     getWords();
 
   function getWords(){
-    var nouns = knownWords.filter(i => i.type*1 === WordTypes.Noun);
-    var verbs = knownWords.filter(i => i.type*1 === WordTypes.Verb);
-    var adjectives = knownWords.filter(i => i.type*1 === WordTypes.Adjective);
+    var noun = getWord(WordTypes.Noun);
+    var verb = getWord(WordTypes.Verb);
+    var adjective = getWord(WordTypes.Adjective);
     
     // If the user doesn't have one of each word type, return early until they do.
-    if (!nouns.length || !verbs.length || !adjectives.length)
+    if (!noun || !verb || !adjective)
       return;
 
     setHasEnoughWords(true);
-
-    var noun = nouns[Math.floor(Math.random() * nouns.length)];
-    var verb = verbs[Math.floor(Math.random() * verbs.length)];
-    var adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
     setCurrentWords([noun, verb, adjective]);
+
+    console.log(knownWords);
+  }
+
+  function getWord(type){
+    var words = knownWords.filter(i => i.type*1 === type);
+    let maxUsage = Math.max(words.map(i => i.uses));
+    let minUsage = Math.min(words.map(i => i.uses));
+
+    // If all words of a given type have been used equally, we can't filter on < maxUsage
+    if (maxUsage !== minUsage)
+      words = words.filter(i => i.uses < maxUsage);
+
+    return words[Math.floor(Math.random() * words.length)];
   }
 
   const receiveTranscriptUpdate = useCallback((transcript) => setTranscript(transcript), []);
@@ -53,6 +65,12 @@ function Practice(props) {
       inSpanish: doubleTranslatedSpanish 
     };
     setHistory((h) => [newItem, ...h]);
+
+    currentWords.forEach(i => {
+      i.uses++;
+      db.words.put(i);
+    });
+    
     getWords();
   }
 

@@ -1,6 +1,7 @@
 definite
-- retry prompts
 - record word uses and promote underused words
+    - how should this work???
+    - idk first version it ignores most used words and picks from words used less than the most
 - weight more common words to appear more often
 - auto-hide history items older than the last
 - rules page
