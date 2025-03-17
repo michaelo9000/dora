@@ -64,7 +64,7 @@ function Practice(props) {
     setHistory((h) => [newItem, ...h]);
 
     currentWords.forEach(i => {
-      i.uses++;
+      i.uses += 1;
       db.words.put(i);
     });
     
@@ -73,6 +73,13 @@ function Practice(props) {
 
   function retryHistoryItem(item, index){
     setCurrentWords(item.words);
+    item.words.forEach(i => {
+      i.uses -= 1;
+      if (i.uses < 0)
+        i.uses = 0;
+      
+      db.words.put(i);
+    });
     let newHistory = history;
     newHistory.splice(index, 1);
     setHistory(newHistory);
