@@ -24,7 +24,7 @@ function Practice(props) {
     var noun = getWord(WordTypes.Noun);
     var verb = getWord(WordTypes.Verb);
     var adjective = getWord(WordTypes.Adjective);
-    
+
     // If the user doesn't have one of each word type, return early until they do.
     if (!noun || !verb || !adjective)
       return;
@@ -37,12 +37,13 @@ function Practice(props) {
 
   function getWord(type){
     var words = knownWords.filter(i => i.type*1 === type);
-    let maxUsage = Math.max(words.map(i => i.uses));
-    let minUsage = Math.min(words.map(i => i.uses));
+    let maxUsage = Math.max(words.map(i => i.uses)) || 0;
+    let minUsage = Math.min(words.map(i => i.uses)) || 0;
 
     // If all words of a given type have been used equally, we can't filter on < maxUsage
     if (maxUsage !== minUsage)
       words = words.filter(i => i.uses < maxUsage);
+
 
     return words[Math.floor(Math.random() * words.length)];
   }

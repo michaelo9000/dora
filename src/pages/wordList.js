@@ -16,7 +16,8 @@ export default function WordList(props){
             return;
         }
         // TODO check if word exists
-        db.words.add({value: input, type: selectedType, uses: 0});
+        db.words.add({value: input, type: selectedType});
+        // db.words.add({value: input, type: selectedType, uses: 0});
     }
 
     function deleteWord(e, id){
