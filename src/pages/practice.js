@@ -40,7 +40,6 @@ function Practice(props) {
     if (maxUsage !== minUsage)
       words = words.filter(i => i.uses < maxUsage);
 
-
     return words[Math.floor(Math.random() * words.length)];
   }
 
@@ -64,7 +63,10 @@ function Practice(props) {
     setHistory((h) => [newItem, ...h]);
 
     currentWords.forEach(i => {
-      i.uses += 1;
+      if (!i.uses)
+        i.uses = 0;
+      
+      i.uses++;
       db.words.put(i);
     });
     

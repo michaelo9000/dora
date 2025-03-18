@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 // import { openai } from "../infra/openai";
 import { translateLayer as translate } from "../infra/translate";
@@ -9,10 +9,11 @@ import { SpeechInput } from "../infra/speechInput";
 
 function Chat(props) {
   const [history, setHistory] = useState([]);
-  // const [transcript, setTranscript] = useState();
+  const [transcript, setTranscript] = useState();
+
+  const receiveTranscriptUpdate = useCallback((transcript) => setTranscript(transcript), []);
 
   async function processSpeechInput(transcript) {
-    // setTranscript(transcript);
     
     let newItem = { sender: "You", message: transcript };
     setHistory((h) => [...h, newItem]);
@@ -63,7 +64,9 @@ function Chat(props) {
         ))}
       </div>
       {!history.length && <i>{"Say hi!"}</i>}
-      <SpeechInput callback={processSpeechInput}/>
+      <br/>
+      <i>{transcript}</i>
+      <SpeechInput onTranscriptFinal={processSpeechInput} onTranscriptUpdate={receiveTranscriptUpdate}/>
     </div>
   );
 }
