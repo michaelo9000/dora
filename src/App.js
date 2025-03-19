@@ -10,8 +10,6 @@ function App() {
   const [rulesOpen, setRulesOpen] = useState();
   const [page, setPage] = useState('practice');
 
-  console.log(rulesOpen);
-
   function getHeaderText(){
     if (error)
       return error;
@@ -60,7 +58,7 @@ function Modal(props){
     </div>
     <div className="modal-body">
       <div className={`content-row`}>
-        <p>Present continuous</p>
+        <p style={{textDecoration:'underline'}}>Present continuous</p>
       </div>
       <div className={`content-row`}>
         <p>I am eating:</p>
@@ -71,7 +69,7 @@ function Modal(props){
         <p>Estoy pensando</p>
       </div>
       <div className={`content-row`}>
-        <p>Present perfect</p>
+        <p style={{textDecoration:'underline'}}>Present perfect</p>
       </div>
       <div className={`content-row`}>
         <p>I have eaten:</p>
@@ -82,7 +80,7 @@ function Modal(props){
         <p>He pensado</p>
       </div>
       <div className={`content-row`}>
-        <p>Future simple</p>
+        <p style={{textDecoration:'underline'}}>Future simple</p>
       </div>
       <div className={`content-row`}>
         <p>I will eat:</p>

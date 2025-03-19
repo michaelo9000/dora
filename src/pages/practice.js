@@ -19,6 +19,9 @@ function Practice(props) {
     getWords();
 
   function getWords(){
+    console.log("words:");
+    console.log(knownWords);
+    
     var noun = getWord(WordTypes.Noun);
     var verb = getWord(WordTypes.Verb);
     var adjective = getWord(WordTypes.Adjective);
@@ -33,8 +36,8 @@ function Practice(props) {
 
   function getWord(type){
     var words = knownWords.filter(i => i.type*1 === type);
-    let maxUsage = Math.max(words.map(i => i.uses)) || 0;
-    let minUsage = Math.min(words.map(i => i.uses)) || 0;
+    let maxUsage = Math.max(...words.map(i => i.uses)) || 0;
+    let minUsage = Math.min(...words.map(i => i.uses)) || 0;
 
     // If all words of a given type have been used equally, we can't filter on < maxUsage
     if (maxUsage !== minUsage)
