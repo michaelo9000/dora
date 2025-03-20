@@ -90,6 +90,23 @@ function Modal(props){
         <p>I will think:</p>
         <p>Pensaré</p>
       </div>
+      <div className={`content-row`}>
+        <p style={{textDecoration:'underline'}}>Present conditional</p>
+      </div>
+      <div className={`content-row`}>
+        <p>Would like:</p>
+        <p>Gustar -ía, -ías, -ían, -íamos</p>
+      </div>
+      <div className={`content-row`}>
+        <p>Many common verbs in this tense are irregular:</p>
+      </div>
+      <div className={`content-row`}>
+        <p>
+          <span className="strike">Podería</span> Podría - 
+          <span className="strike">Tenería</span> Tendría -
+          <span className="strike">Deciría</span> Diría 
+        </p>
+      </div>
     </div>
   </div>
 }

@@ -233,3 +233,7 @@ button {
 .mt-10 {
   margin-top:10px;
 }
+
+.strike {
+  text-decoration: line-through;
+}
