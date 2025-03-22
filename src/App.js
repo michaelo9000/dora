@@ -107,6 +107,17 @@ function Modal(props){
           <span className="strike">Deciría</span> Diría 
         </p>
       </div>
+      <div className={`content-row`}>
+        <p style={{textDecoration:'underline'}}>Past continuous</p>
+      </div>
+      <div className={`content-row`}>
+        <p>Was eating:</p>
+        <p>Com -ía, -ías, -ían, -íamos</p>
+      </div>
+      <div className={`content-row`}>
+        <p>Was speaking:</p>
+        <p>Habl -aba, -abas, -aban, -abamos</p>
+      </div>
     </div>
   </div>
 }
