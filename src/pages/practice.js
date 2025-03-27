@@ -12,6 +12,8 @@ function Practice(props) {
   const [hasEnoughWords, setHasEnoughWords] = useState();
   const [currentWords, setCurrentWords] = useState([]);
 
+  const [anyWordMode, setAnyWordMode] = useState();
+  
   const knownWords = useLiveQuery(() => db.words.toArray());
 
   // Get the initial words. Following this they'll be refreshed after each sentence spoken.
@@ -21,6 +23,10 @@ function Practice(props) {
   function getWords(){
     console.log("words:");
     console.log(knownWords);
+
+    for (let i = 0; i < knownWords.length; i++){
+      knownWords[i].inUse = false;
+    }
     
     var noun = getWord(WordTypes.Noun);
     var verb = getWord(WordTypes.Verb);
@@ -35,7 +41,12 @@ function Practice(props) {
   }
 
   function getWord(type){
-    var words = knownWords.filter(i => i.type*1 === type);
+    let words = knownWords.filter(i => !i.inUse);
+    
+    // Terrible practice because the variables in getWords are named for the word type but I'm the only one in here :3
+    if (!anyWordMode)
+      words = words.filter(i => i.type*1 === type);
+
     let maxUsage = Math.max(...words.map(i => i.uses)) || 0;
     let minUsage = Math.min(...words.map(i => i.uses)) || 0;
 
@@ -43,7 +54,9 @@ function Practice(props) {
     if (maxUsage !== minUsage)
       words = words.filter(i => i.uses < maxUsage);
 
-    return words[Math.floor(Math.random() * words.length)];
+    let word = words[Math.floor(Math.random() * words.length)];
+    word.inUse = true;
+    return word;
   }
 
   const receiveTranscriptUpdate = useCallback((transcript) => setTranscript(transcript), []);
@@ -105,6 +118,8 @@ function Practice(props) {
         <HistoryItem key={idx} idx={idx} i={i} retry={retryHistoryItem}/>
       )}
     </div>
+    <div className={`mode-switch ${anyWordMode ? 'any' : 'strict'}`} onClick={() => setAnyWordMode(!anyWordMode)}/>
+    <div className={`refresh`} onClick={() => getWords()}/>
     <SpeechInput onTranscriptFinal={processSpeechInput} onTranscriptUpdate={receiveTranscriptUpdate}/>
     </>
   );
