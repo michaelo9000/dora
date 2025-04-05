@@ -11,6 +11,7 @@ function Practice(props) {
   // optimistically true until proven false.
   const [hasEnoughWords, setHasEnoughWords] = useState();
   const [currentWords, setCurrentWords] = useState([]);
+  const [tense, setTense] = useState();
 
   const [anyWordMode, setAnyWordMode] = useState();
   
@@ -38,6 +39,7 @@ function Practice(props) {
 
     setHasEnoughWords(true);
     setCurrentWords([noun, verb, adjective]);
+    setTense(getTense());
   }
 
   function getWord(type){
@@ -119,7 +121,7 @@ function Practice(props) {
       </div>
       <div className="content-row between">
         <p>Try using:</p>
-        <p>{getTense()}</p>
+        <p>{tense}</p>
       </div>
       <i>{transcript || 'Speaking at a conversational pace works best!'}</i>
       {history.map((i, idx) => 
