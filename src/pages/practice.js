@@ -3,7 +3,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 
 import { translateLayer as translate } from "../infra/translate";
 import { SpeechInput } from "../infra/speechInput";
-import { db, WordTypes } from "../infra/data";
+import { db, WordTypes, Tenses } from "../infra/data";
 
 function Practice(props) {
   const [transcript, setTranscript] = useState();
@@ -103,6 +103,10 @@ function Practice(props) {
     setHistory(newHistory);
   }
 
+  function getTense(){
+    return Tenses[Math.floor(Math.random() * Tenses.length)];
+  }
+
   if (!props.isActive) 
     return <></>
 
@@ -112,6 +116,10 @@ function Practice(props) {
       {!hasEnoughWords && <p>Add a Noun, a Verb and an Adjective, and then return here.</p>}
       <div className="content-row around">
         {currentWords.map((i, idx) => <p key={idx} className="word-prompt">{i.value}</p>)}
+      </div>
+      <div className="content-row between">
+        <p>Try using:</p>
+        <p>{getTense()}</p>
       </div>
       <i>{transcript || 'Speaking at a conversational pace works best!'}</i>
       {history.map((i, idx) => 

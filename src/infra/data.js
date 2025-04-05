@@ -7,9 +7,9 @@ db.version(1).stores({
 });
 
 export const WordTypes = {
-    Verb: 0,
-    Noun: 1,
-    Adjective: 2
+  Verb: 0,
+  Noun: 1,
+  Adjective: 2
 };
 
 export function getWordTypeName(value) {
@@ -18,3 +18,11 @@ export function getWordTypeName(value) {
   let key = keys.find(i => WordTypes[i] === value * 1);
   return key;
 }
+
+export const Tenses = [
+  "Present continuous",
+  "Present perfect",
+  "Future simple",
+  "Present conditional",
+  "Past continuous",
+];
